@@ -3,3 +3,16 @@
 {% block title %}
 <title>Decode your URL</title>
 {% endblock %}
+
+{% block content%}
+
+<div class="header">
+  <h2>Extend Your URL</h2>
+  <p class="note">Use this search field to revert shortened URLs.</p>
+</div>
+<form method="post">
+  <input type="text" placeholder="Enter URL here..." name="decode-input" id="decode-input" />
+  <button type="submit" class="search-button">Search</button>
+</form>
+
+{% endblock %}

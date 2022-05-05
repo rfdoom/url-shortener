@@ -7,8 +7,16 @@
 {% block content%}
 
 <div class="header">
-  <h2>Search My Database</h2>
-  <p class="note">Use this search field to find existing shortened urls.</p>
+  <h2>Shorten Your URL</h2>
+  <p class="note">Use this search field to create a shortened URL.</p>
 </div>
+<form method="post">
+  <label for="url-input">URL: </label>
+    <input type="text" placeholder="Enter URL here..." name="url-input" id="url-input" />
+    <br /><br />
+  <label for="nickname-input">Nickname: </label>
+    <input type="text" placeholder="Enter nickname here..." name="nickname-input" id="nickname-input" />
+  <button type="submit" class="search-button">Search</button>
+</form>
 
 {% endblock %}
