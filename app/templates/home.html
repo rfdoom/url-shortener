@@ -11,9 +11,15 @@
   <h2>Search My Database</h2>
   <p class="note">Use this search field to find existing shortened URLs by their nicknames.</p>
 </div>
-<form method="post">
+<form method="POST">
   <input type="text" placeholder="Enter nickname here..." name="home-search" id="home-search" />
   <button type="submit" class="search-button">Search</button>
 </form>
+<br /><br />
+{% if data %}
+<p>{ longURL: {{ data.longURL}}, shortURL: {{ data.shortURL }}, nickname: {{ data.nickname }} }</p>
+{% elif error %}
+<p>{{error}}</p>
+{% endif %}
 
 {% endblock %}

@@ -9,6 +9,8 @@
 <div class="header">
   <h2>Shorten Your URL</h2>
   <p class="note">Use this search field to create a shortened URL.</p>
+  <p class="note">Enter the full URL, including things like 'https://' or 'http://'.</p>
+  <br /><br />
 </div>
 <form method="POST">
   <label for="url-input">URL: </label>
@@ -16,9 +18,14 @@
     <br /><br />
   <label for="nickname-input">Nickname: </label>
     <input type="text" placeholder="Enter nickname here..." name="nickname-input" id="nickname-input" />
-  <button type="submit" class="search-button">Search</button>
+  <button type="submit" class="short-button">Shorten</button>
 </form>
 <br /><br />
 {{data}}
+{% if status %}
+<p>ERROR CODE: {{ status }}. PLEASE REVIEW ERROR ON THE DOCUMENTATION <a target="_blank" href="https://cutt.ly/api-documentation/cuttly-links-api">HERE</a></p>
+{% elif nameerror %}
+<h4>{{ nameerror }}</h4>
+{% endif %}
 
 {% endblock %}

@@ -1,6 +1,5 @@
-from webbrowser import get
-from django import shortcuts
-from django.shortcuts import render, redirect
+from genericpath import exists
+from django.shortcuts import render, redirect, reverse
 from django.forms import ValidationError
 import requests
 from .models import URL
@@ -11,8 +10,15 @@ from django.views.decorators.csrf import csrf_exempt
 API_KEY = 'e99aae469de9eacb0c20ad6735ff7dbc4b1fb'
 ONE_SIMPLE_API_KEY = 'lZNWLMwKTe41DQsBzMr5rocfFfhCFVhAQ1oIUr1R'
 
-
+@csrf_exempt
 def home(request):
+    if request.method == 'POST':
+        search = request.POST['home-search']
+        if URL.objects.filter(nickname=search).exists():
+            url = URL.objects.get(nickname=search)
+            return render(request, 'home.html', {'data': url})
+        else:
+            return render(request, 'home.html', {'error': 'Not found'})
     return render(request, 'home.html')
 
 @csrf_exempt
@@ -23,6 +29,8 @@ def encode(request):
             get_short_url = f'https://cutt.ly/api/api.php?key={API_KEY}&output=json&short={url}'
             data = requests.get(get_short_url).json()
             print('URL:', url, 'shortURL:', get_short_url, 'data:', data)
+            if URL.objects.filter(nickname=request.POST['nickname-input']).exists():
+                return render(request, 'encode.html', {'nameerror': 'Cannot use this nickname'})
             if data['url']['status'] == 7:
                 new_instance = URL()
                 new_instance.longURL = url
@@ -32,8 +40,7 @@ def encode(request):
                 return render(request, 'encode.html', {'data':data})
             else:
                 status = data['url']['status']
-                print(f'ERROR STATUS: {status}')
-                return redirect('error', {'error': status})
+                return render(request, 'encode.html', {'status': status})
         except ValidationError as e:
             return redirect('error')
     return render(request, 'encode.html')
