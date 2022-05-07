@@ -10,9 +10,12 @@
   <h2>Extend Your URL</h2>
   <p class="note">Use this search field to revert shortened URLs.</p>
 </div>
-<form method="post">
+<form method="POST">
   <input type="text" placeholder="Enter URL here..." name="decode-input" id="decode-input" />
   <button type="submit" class="search-button">Search</button>
 </form>
-
+<br /><br />
+{% if data %}
+<p>{longLink: {{ data }}}</p>
+{% endif %}
 {% endblock %}
