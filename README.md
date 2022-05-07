@@ -29,6 +29,8 @@
 
 - Next, download the 'requirements.txt' file using 'pip install -r requirements.txt'
 
+- Then, start a postgresql database, named 'all_urls'. If you want to name it something else, be sure to change the 'settings.py' to reflect that.
+
 - Finally, use the command 'python manage.py runserver' to start the Django server. It should link to your localhost. ALT + click the link in your terminal to open it.
 
 - Use the app as you please.

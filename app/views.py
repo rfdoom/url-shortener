@@ -14,6 +14,7 @@ ONE_SIMPLE_API_KEY = 'lZNWLMwKTe41DQsBzMr5rocfFfhCFVhAQ1oIUr1R'
 def home(request):
     if request.method == 'POST':
         search = request.POST['home-search']
+        # checks if this nickname exists in the database
         if URL.objects.filter(nickname=search).exists():
             url = URL.objects.get(nickname=search)
             return render(request, 'home.html', {'data': url})
@@ -27,10 +28,13 @@ def encode(request):
         try:
             url = request.POST['url-input']
             get_short_url = f'https://cutt.ly/api/api.php?key={API_KEY}&output=json&short={url}'
+            # gets the info from the API and converts it to JSON
             data = requests.get(get_short_url).json()
             print('URL:', url, 'shortURL:', get_short_url, 'data:', data)
+            # checks if the nickname is already in use
             if URL.objects.filter(nickname=request.POST['nickname-input']).exists():
                 return render(request, 'encode.html', {'nameerror': 'Cannot use this nickname'})
+            # creates new instance for database
             if data['url']['status'] == 7:
                 new_instance = URL()
                 new_instance.longURL = url
